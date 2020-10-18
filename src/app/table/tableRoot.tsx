@@ -14,30 +14,35 @@ const Table = <T extends object>({ columns, data }: TableProps<T>) => {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        page,
+        rows,
         prepareRow,
-        state,
     } = table;
 
     return (
         <table className="tm-table" {...getTableProps()}>
-            {headerGroups.map((group) => (
-                <tr {...group.getHeaderGroupProps()}>
-                    {group.headers.map((column) => (
-                        <th {...column.getHeaderProps()}>
-                            {column.render("Header")}
-                        </th>
-                    ))}
-                </tr>
-            ))}
+            <thead>
+                {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                            <th {...column.getHeaderProps()}>
+                                {column.render("Header")}
+                            </th>
+                        ))}
+                    </tr>
+                ))}
+            </thead>
             <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
+                {rows.map((row) => {
                     prepareRow(row);
                     return (
                         <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => (
-                                <td>{cell.render("Cell")}</td>
-                            ))}
+                            {row.cells.map((cell) => {
+                                return (
+                                    <td {...cell.getCellProps()}>
+                                        {cell.render("Cell")}
+                                    </td>
+                                );
+                            })}
                         </tr>
                     );
                 })}

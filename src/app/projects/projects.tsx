@@ -2,14 +2,20 @@ import React from "react";
 import ReactDom from "react-dom";
 import Table from "../table/tableRoot";
 import "../styles/global.scss";
-import { Column } from "react-table";
+import { Cell, Column } from "react-table";
+import moment from "moment";
 
 type Project = {
+    id: number;
     name: string;
     created: Date;
     lastEdited: Date;
     author: string;
 };
+
+const dateRenderMethod = (cell: Cell) => (
+    <span> {moment(cell.value).format("DD MMM YYYY hh:mm")} </span>
+);
 
 const columnsDef: Column<Project>[] = [
     {
@@ -19,19 +25,22 @@ const columnsDef: Column<Project>[] = [
     {
         accessor: "created",
         Header: "Created at",
+        Cell: dateRenderMethod,
     },
     {
         accessor: "lastEdited",
         Header: "Last changed at",
+        Cell: dateRenderMethod,
     },
     {
-        accessor: "name",
+        accessor: "author",
         Header: "Author",
     },
 ];
 
 const exampleData: Project[] = [
     {
+        id: 0,
         name: "Hello world!",
         created: new Date(Date.now()),
         lastEdited: new Date(Date.now()),

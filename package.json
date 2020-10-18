@@ -14,7 +14,7 @@
         "react-hot-loader": "^4.13.0"
     },
     "scripts": {
-        "rebuild": "webpack --mode production",
+        "rebuild": "webpack --mode development",
         "start": "webpack --mode production && electron ./dist/electron.js",
         "start:dev": "webpack --mode development && electron ./dist/electron.js",
         "test": "jest"
